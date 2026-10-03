@@ -1,10 +1,11 @@
 export default async function FeaturedExperience() {
   try {
-const response = await fetch(
-"http://backend:8080/api/offers/featured",  {
-    cache: "no-store",
-  }
-)
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+    const response = await fetch(
+      `${apiUrl}/api/offers/featured`, {
+        cache: "no-store",
+      }
+    )
     if (!response.ok) {
       throw new Error("Failed to fetch featured offer")
     }
