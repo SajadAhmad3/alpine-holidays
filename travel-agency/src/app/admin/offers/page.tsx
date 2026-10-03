@@ -70,8 +70,9 @@ export default function OffersPage() {
     try {
       setError("")
 
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/offers`,
+        `${apiUrl}/api/offers`,
         {
           cache: "no-store",
         }
@@ -164,9 +165,10 @@ export default function OffersPage() {
 
     try {
       const token = getToken()
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/offers/${id}/featured`,
+        `${apiUrl}/api/admin/offers/${id}/featured`,
         {
           method: "POST",
           headers: {
@@ -209,9 +211,10 @@ export default function OffersPage() {
 
     try {
       const token = getToken()
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/offers/${offer.id}/active?active=${!offer.active}`,
+        `${apiUrl}/api/admin/offers/${offer.id}/active?active=${!offer.active}`,
         {
           method: "PUT",
           headers: {
@@ -266,9 +269,10 @@ export default function OffersPage() {
 
     try {
       const token = getToken()
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/offers/${id}`,
+        `${apiUrl}/api/admin/offers/${id}`,
         {
           method: "DELETE",
           headers: {
@@ -318,9 +322,11 @@ export default function OffersPage() {
     setMessage("")
     setError("")
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+
     const url = editingId
-      ? `${process.env.NEXT_PUBLIC_API_URL}/api/admin/offers/${editingId}`
-      : `${process.env.NEXT_PUBLIC_API_URL}/api/admin/offers`
+      ? `${apiUrl}/api/admin/offers/${editingId}`
+      : `${apiUrl}/api/admin/offers`
 
     const method = editingId ? "PUT" : "POST"
 

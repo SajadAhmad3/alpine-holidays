@@ -20,8 +20,9 @@ export default function AdminLoginPage() {
     setLoading(true)
 
     try {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/auth/login`,
+        `${apiUrl}/api/auth/login`,
         {
           method: "POST",
           headers: {

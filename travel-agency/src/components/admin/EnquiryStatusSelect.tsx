@@ -98,9 +98,10 @@ export default function EnquiryStatusSelect({
 
     try {
       const token = localStorage.getItem("adminToken")
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
 
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/enquiries/${id}/status`,
+        `${apiUrl}/api/admin/enquiries/${id}/status`,
         {
           method: "PATCH",
           headers: {

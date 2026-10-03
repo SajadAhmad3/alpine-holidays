@@ -23,7 +23,8 @@ export default function ContactForm() {
     }
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/enquiries`, {
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
+      const response = await fetch(`${apiUrl}/api/enquiries`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

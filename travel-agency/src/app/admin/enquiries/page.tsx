@@ -15,9 +15,10 @@ type Enquiry = {
 
 async function getEnquiries(): Promise<Enquiry[]> {
   const token = localStorage.getItem("adminToken")
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/enquiries`,
+    `${apiUrl}/api/admin/enquiries`,
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -40,9 +41,10 @@ async function getEnquiries(): Promise<Enquiry[]> {
 
 async function deleteEnquiry(id: number) {
   const token = localStorage.getItem("adminToken")
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080"
 
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/admin/enquiries/${id}`,
+    `${apiUrl}/api/admin/enquiries/${id}`,
     {
       method: "DELETE",
       headers: {
