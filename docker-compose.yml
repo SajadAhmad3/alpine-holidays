@@ -1,0 +1,70 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: alpine-dream-postgres
+    restart: unless-stopped
+
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+    networks:
+      - alpine-dream
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+
+    container_name: alpine-dream-backend
+    restart: unless-stopped
+
+    environment:
+      DB_URL: jdbc:postgresql://postgres:5432/${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+
+    depends_on:
+      - postgres
+
+    ports:
+      - "8080:8080"
+
+    networks:
+      - alpine-dream
+
+  frontend:
+    build:
+      context: ./travel-agency
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+
+    container_name: alpine-dream-frontend
+
+    depends_on:
+      backend:
+        condition: service_started
+
+    environment:
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+
+    networks:
+      - alpine-dream
+
+    ports:
+      - "3000:3000"
+
+    restart: unless-stopped
+
+networks:
+  alpine-dream:
+
+volumes:
+  postgres_data:
